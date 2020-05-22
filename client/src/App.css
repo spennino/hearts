@@ -1,0 +1,7 @@
+.game-container {
+  display: flex;
+}
+
+.players, .trick, .game-info, .discards, .score {
+  flex-grow: 1;
+}
