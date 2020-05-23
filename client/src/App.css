@@ -2,6 +2,6 @@
   display: flex;
 }
 
-.players, .trick, .game-info, .discards, .score {
+.players, .trick, .game-code, .game-status, .discards, .score {
   flex-grow: 1;
 }

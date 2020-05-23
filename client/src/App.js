@@ -10,6 +10,7 @@ class Game extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      gameCode: '',
       players: [],
       trick: {},
       trickSuit: '',
@@ -37,6 +38,13 @@ class Game extends React.Component {
 
     this.handleDiscard = this.handleDiscard.bind(this)
   }
+
+  componentDidMount() {
+    fetch('/api/create')
+      .then(res => res.json())
+      .then(gameCode => this.setState({ gameCode }))
+  }
+
 
   handleDiscard(card, playerPosition) {
     const trick = { ...this.state.trick }
@@ -189,7 +197,10 @@ class Game extends React.Component {
 
     return (
       <div className='game-container'>
-        <div className='game-info'>
+        <div className='game-code'>
+          Game code: {this.state.gameCode}
+        </div>
+        <div className='game-status'>
           Status: {this.state.status}
         </div>
         <div className='players'>
