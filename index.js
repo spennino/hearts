@@ -1,5 +1,10 @@
+require('dotenv').config();
 const express = require('express');
 const path = require('path');
+const shortid = require('shortid');
+const rtg = require("url").parse(process.env.REDISTOGO_URL);
+const redis = require("redis").createClient(rtg.port, rtg.hostname);
+redis.auth(rtg.auth.split(":")[1]);
 
 const app = express();
 
@@ -8,7 +13,8 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 
 // Put all API endpoints under '/api'
 app.get('/api/create', (req, res) => {
-  res.json('X34H')
+  let gameCode = shortid.generate();
+  res.json(gameCode)
 });
 
 // The "catchall" handler: for any request that doesn't
