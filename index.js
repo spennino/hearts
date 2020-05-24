@@ -2,9 +2,14 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const shortid = require('shortid');
+
+// Redis setup
 const rtg = require("url").parse(process.env.REDISTOGO_URL);
 const redis = require("redis").createClient(rtg.port, rtg.hostname);
 redis.auth(rtg.auth.split(":")[1]);
+const { promisify } = require("util");
+const redisGet = promisify(redis.get).bind(redis);
+const redisSet = promisify(redis.set).bind(redis);
 
 const app = express();
 
