@@ -5,3 +5,7 @@
 .players, .trick, .game-code, .game-status, .discards, .score {
   flex-grow: 1;
 }
+
+.hidden {
+  visibility: hidden;
+}
