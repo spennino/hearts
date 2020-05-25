@@ -16,7 +16,7 @@ class App extends React.Component {
     this.setState({
       isFetching: true
     })
-    fetch('/api/create')
+    fetch('/api/game/create')
       .then(res => res.json())
       .then(gameCode => {
         this.setState({

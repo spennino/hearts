@@ -36,6 +36,17 @@ class Game extends React.Component {
     this.state.players.forEach(player => player.sortHand())
 
     this.handleDiscard = this.handleDiscard.bind(this)
+
+    this.postGameUpdate()
+  }
+
+  async postGameUpdate() {
+    const response = await fetch('/api/game/update', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(this.state)
+    });
+    return response.json()
   }
 
   handleDiscard(card, playerPosition) {
@@ -83,6 +94,8 @@ class Game extends React.Component {
       trickSuit: trickSuit,
       playerTurn: playerTurn,
       status: status
+    }, () => {
+      this.postGameUpdate()
     })
   }
 
