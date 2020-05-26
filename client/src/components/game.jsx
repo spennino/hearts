@@ -17,6 +17,16 @@ class Game extends React.Component {
       status: ''
     }
 
+    if (props.startGame) {
+      this.startGame()
+    } else {
+      this.fetchGameState()
+    }
+
+    this.handleDiscard = this.handleDiscard.bind(this)
+  }
+
+  startGame() {
     const deck = new Deck()
     this.numOfPlayers = 4
     for (var i = 1; i <= this.numOfPlayers; i++) {
@@ -34,11 +44,10 @@ class Game extends React.Component {
       })
     }
     this.state.players.forEach(player => player.sortHand())
-
-    this.handleDiscard = this.handleDiscard.bind(this)
-
-    this.postGameUpdate()
+    this.postGameUpdate().catch(console.log)
   }
+
+  fetchGameState() { }
 
   async postGameUpdate() {
     const response = await fetch('/api/game/update', {

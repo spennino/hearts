@@ -8,6 +8,7 @@ class App extends React.Component {
     this.state = {
       gameCode: null,
       inputGameCode: '',
+      startGame: false,
       isFetching: false
     }
     this.createGame = this.createGame.bind(this)
@@ -16,14 +17,13 @@ class App extends React.Component {
   }
 
   createGame() {
-    this.setState({
-      isFetching: true
-    })
+    this.setState({ isFetching: true })
     fetch('/api/game/create')
       .then(res => res.json())
       .then(gameCode => {
         this.setState({
           gameCode: gameCode,
+          startGame: true,
           isFetching: false
         })
       })
@@ -36,11 +36,15 @@ class App extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    this.setState({ isFetching: true })
     fetch(`/api/game/get/${this.state.inputGameCode}`)
       .then(response => {
         switch (response.status) {
           case 200:
-            this.setState({ gameCode: this.state.inputGameCode })
+            this.setState({
+              gameCode: this.state.inputGameCode,
+              startGame: false
+            })
             break
           case 404:
             alert('Game Code not found, please try another')
@@ -76,7 +80,12 @@ class App extends React.Component {
         </div>
       );
     } else {
-      return (<Game gameCode={this.state.gameCode} />)
+      return (
+        <Game
+          gameCode={this.state.gameCode}
+          startGame={this.state.startGame}
+        />
+      )
     }
   }
 }
