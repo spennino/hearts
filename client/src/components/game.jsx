@@ -4,10 +4,12 @@ import Player from '../models/player'
 import Hand from './hand'
 import PlayerView from './playerView'
 import Score from './score'
+import Card from '../models/card'
 
 class Game extends React.Component {
   constructor(props) {
     super(props)
+    this.numOfPlayers = props.numOfPlayers || 4
     this.state = {
       gameCode: props.gameCode,
       players: [],
@@ -28,7 +30,6 @@ class Game extends React.Component {
 
   startGame() {
     const deck = new Deck()
-    this.numOfPlayers = 4
     for (var i = 1; i <= this.numOfPlayers; i++) {
       this.state.players.push(new Player(i))
     }
@@ -47,7 +48,46 @@ class Game extends React.Component {
     this.postGameUpdate().catch(console.log)
   }
 
-  fetchGameState() { }
+  fetchGameState() {
+    fetch(`/api/game/get/${this.state.gameCode}`)
+      .then(response => response.json())
+      .then(json => this.setState(this.parseGameStateResponse(json)))
+  }
+
+  parseGameStateResponse(json) {
+    let response = JSON.parse(json)
+    let newPlayers = response.players || []
+    newPlayers = newPlayers.map(player => {
+      let newPlayer = new Player(player.position)
+      newPlayer.hand = this.parseCards(player.hand)
+      newPlayer.tricksWon = this.parseCards(player.tricksWon)
+      newPlayer.points = player.points
+      return newPlayer
+    })
+    let newTrick = {}
+    for (var i = 1; i <= this.numOfPlayers; i++) {
+      let card = response.trick[i]
+      if (card) {
+        newTrick[i] = new Card(response.trick[i].suit, response.trick[i].value)
+      }
+    }
+
+    return {
+      gameCode: response.gameCode,
+      players: newPlayers,
+      trick: newTrick,
+      trickSuit: response.trickSuit,
+      playerTurn: response.playerTurn,
+      status: response.status
+    }
+  }
+
+  parseCards(cards) {
+    cards = cards || []
+    return cards.map(card => {
+      return new Card(card.suit, card.value)
+    })
+  }
 
   async postGameUpdate() {
     const response = await fetch('/api/game/update', {

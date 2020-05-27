@@ -31,17 +31,15 @@ app.get('/api/game/create', (req, res) => {
 
 app.get('/api/game/get/:gameCode', jsonParser, (req, res) => {
   redisGet(req.params.gameCode).then(gameState => {
-    console.log(gameState)
     if (!gameState) {
       res.sendStatus(404)
     } else {
-      res.json(gameState).statusCode(200)
+      res.json(gameState).statusCode(200).catch(console.log)
     }
   })
 })
 
 app.post('/api/game/update', jsonParser, (req, res) => {
-  console.log('updating ' + req.body.gameCode)
   redisSet(req.body.gameCode, JSON.stringify(req.body)).then(status => {
     res.sendStatus(200)
   })
