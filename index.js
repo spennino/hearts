@@ -3,6 +3,7 @@ const express = require('express')
 const jsonParser = require('body-parser').json()
 const path = require('path')
 const shortid = require('shortid')
+const WebSocket = require('ws');
 
 // Redis setup
 const rtg = require("url").parse(process.env.REDISTOGO_URL)
@@ -34,7 +35,7 @@ app.get('/api/game/get/:gameCode', jsonParser, (req, res) => {
     if (!gameState) {
       res.sendStatus(404)
     } else {
-      res.json(gameState).statusCode(200).catch(console.log)
+      res.json(gameState)
     }
   })
 })
@@ -51,7 +52,19 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname + '/client/build/index.html'))
 })
 
-const port = process.env.PORT || 5000
-app.listen(port)
+app.listen(5000)
+console.log(`Web Server on 5000`)
 
-console.log(`Listening on ${port}`)
+const wss = new WebSocket.Server({ port: 3030 });
+console.log(`Web Socket Server on 3030`)
+
+wss.on('connection', function connection(ws) {
+  ws.on('message', function incoming(data) {
+    redisSet(JSON.parse(data).gameCode, data).catch(console.log)
+    wss.clients.forEach(function each(client) {
+      if (client !== ws && client.readyState === WebSocket.OPEN) {
+        client.send(data);
+      }
+    });
+  });
+});

@@ -6,12 +6,17 @@ import PlayerView from './playerView'
 import Score from './score'
 import Card from '../models/card'
 
+const URL = 'ws://localhost:3030'
+
 class Game extends React.Component {
+
   constructor(props) {
     super(props)
     this.numOfPlayers = props.numOfPlayers || 4
     this.state = {
+      ws: new WebSocket(URL),
       gameCode: props.gameCode,
+      startGame: props.startGame,
       players: [],
       trick: {},
       trickSuit: '',
@@ -26,6 +31,24 @@ class Game extends React.Component {
     }
 
     this.handleDiscard = this.handleDiscard.bind(this)
+  }
+
+  componentDidMount() {
+    this.state.ws.onopen = () => {
+      if (this.state.startGame) {
+        this.sendGameUpdate()
+      }
+    }
+
+    this.state.ws.onmessage = evt => {
+      this.parseResponseAndUpdateState(evt.data)
+    }
+
+    this.state.ws.onclose = () => {
+      this.setState({
+        ws: new WebSocket(URL),
+      })
+    }
   }
 
   startGame() {
@@ -45,17 +68,23 @@ class Game extends React.Component {
       })
     }
     this.state.players.forEach(player => player.sortHand())
-    this.postGameUpdate().catch(console.log)
   }
 
   fetchGameState() {
     fetch(`/api/game/get/${this.state.gameCode}`)
       .then(response => response.json())
-      .then(json => this.setState(this.parseGameStateResponse(json)))
+      .then(json => this.parseResponseAndUpdateState(json))
+  }
+
+  parseResponseAndUpdateState(json) {
+    this.setState(this.parseGameStateResponse(json))
   }
 
   parseGameStateResponse(json) {
     let response = JSON.parse(json)
+    if (response.gameCode !== this.state.gameCode) {
+      return
+    }
     let newPlayers = response.players || []
     newPlayers = newPlayers.map(player => {
       let newPlayer = new Player(player.position)
@@ -73,7 +102,6 @@ class Game extends React.Component {
     }
 
     return {
-      gameCode: response.gameCode,
       players: newPlayers,
       trick: newTrick,
       trickSuit: response.trickSuit,
@@ -89,13 +117,8 @@ class Game extends React.Component {
     })
   }
 
-  async postGameUpdate() {
-    const response = await fetch('/api/game/update', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(this.state)
-    });
-    return response.json()
+  sendGameUpdate() {
+    this.state.ws.send(JSON.stringify(this.state))
   }
 
   handleDiscard(card, playerPosition) {
@@ -144,7 +167,7 @@ class Game extends React.Component {
       playerTurn: playerTurn,
       status: status
     }, () => {
-      this.postGameUpdate()
+      this.sendGameUpdate()
     })
   }
 
