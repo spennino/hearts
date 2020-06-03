@@ -54,7 +54,7 @@ app.get('*', (req, res) => {
 
 app.listen(process.env.PORT || 5000)
 
-const wss = new Server({ server });
+const wss = new Server({ app });
 
 wss.on('connection', function connection(ws) {
   ws.on('message', function incoming(data) {
