@@ -3,7 +3,7 @@ const express = require('express')
 const jsonParser = require('body-parser').json()
 const path = require('path')
 const shortid = require('shortid')
-const WebSocket = require('ws');
+const { Server } = require('ws');
 
 // Redis setup
 const rtg = require("url").parse(process.env.REDISTOGO_URL)
@@ -52,11 +52,9 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname + '/client/build/index.html'))
 })
 
-app.listen(5000)
-console.log(`Web Server on 5000`)
+app.listen(process.env.PORT || 5000)
 
-const wss = new WebSocket.Server({ port: 3030 });
-console.log(`Web Socket Server on 3030`)
+const wss = new Server({ server });
 
 wss.on('connection', function connection(ws) {
   ws.on('message', function incoming(data) {
