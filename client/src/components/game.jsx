@@ -1,4 +1,3 @@
-require('dotenv').config()
 import React from 'react'
 import Deck from '../models/deck'
 import Player from '../models/player'
@@ -6,10 +5,11 @@ import Hand from './hand'
 import PlayerView from './playerView'
 import Score from './score'
 import Card from '../models/card'
+require('dotenv').config()
 
 const URL = process.env.NODE_ENV === 'development'
-  ? 'ws://localhost:3030'
-  : 'https://infinite-sea-14790.herokuapp.com/'
+  ? 'ws://localhost:5000'
+  : 'ws://infinite-sea-14790.herokuapp.com/'
 
 class Game extends React.Component {
 
