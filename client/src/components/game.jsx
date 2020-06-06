@@ -5,11 +5,10 @@ import Hand from './hand'
 import PlayerView from './playerView'
 import Score from './score'
 import Card from '../models/card'
-require('dotenv').config()
 
-const URL = process.env.NODE_ENV === 'development'
+const WS_URL = process.env.NODE_ENV === 'development'
   ? 'ws://localhost:5000'
-  : 'wss://infinite-sea-14790.herokuapp.com/'
+  : 'ws://infinite-sea-14790.herokuapp.com/'
 
 class Game extends React.Component {
 
@@ -17,7 +16,7 @@ class Game extends React.Component {
     super(props)
     this.numOfPlayers = props.numOfPlayers || 4
     this.state = {
-      ws: new WebSocket(URL),
+      ws: new WebSocket(WS_URL),
       gameCode: props.gameCode,
       startGame: props.startGame,
       players: [],
@@ -42,14 +41,12 @@ class Game extends React.Component {
         this.sendGameUpdate()
       }
     }
-
     this.state.ws.onmessage = evt => {
       this.parseResponseAndUpdateState(evt.data)
     }
-
     this.state.ws.onclose = () => {
       this.setState({
-        ws: new WebSocket(URL),
+        ws: new WebSocket(WS_URL),
       })
     }
   }
