@@ -8,7 +8,7 @@ import Card from '../models/card'
 
 const WS_URL = process.env.NODE_ENV === 'development'
   ? 'ws://localhost:5000'
-  : 'ws://infinite-sea-14790.herokuapp.com/'
+  : 'wss://infinite-sea-14790.herokuapp.com/'
 
 class Game extends React.Component {
 
