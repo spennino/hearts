@@ -195,6 +195,8 @@ class Game extends React.Component {
         trick: trick,
         playerTurn: playerTurn,
         status: status
+      }, () => {
+        this.sendGameUpdate()
       })
     }, 2000)
   }
@@ -222,6 +224,8 @@ class Game extends React.Component {
       this.setState({
         players: players,
         status: "End of hand!"
+      }, () => {
+        this.sendGameUpdate()
       })
     }, 2000)
   }

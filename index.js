@@ -59,9 +59,7 @@ server.listen(process.env.PORT || 5000)
 const wss = new WebSocket.Server({ server });
 
 wss.on('connection', function connection(ws) {
-  console.log('connection')
   ws.on('message', function incoming(data) {
-    console.log('message')
     redisSet(JSON.parse(data).gameCode, data).catch(console.log)
     wss.clients.forEach(function each(client) {
       if (client !== ws && client.readyState === WebSocket.OPEN) {
