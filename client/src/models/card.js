@@ -5,6 +5,7 @@ class Card {
     this.suit = suit
     this.value = value
     this.name = value + ' of ' + suit
+    this.color = suit === '♠' || suit === '♣' ? 'black' : 'red'
   }
 
   isGreaterValueThan(card) {

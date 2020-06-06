@@ -1,3 +1,8 @@
+* {
+  font-family: 'Comic Neue', cursive;  
+  background-color: seagreen;
+}
+
 .game-container {
   display: flex;
 }
@@ -8,4 +13,44 @@
 
 .hidden {
   visibility: hidden;
+}
+
+.hand-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.card-container {
+  width: 60px;
+  height: 84px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  background-color: white;
+  margin: 5px;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.left-align {
+  text-align: left;
+}
+
+.center-align {
+  text-align: center;
+}
+
+.right-align {
+  text-align: right;
+}
+
+.red {
+  color: red;
+  background-color: white;
+}
+
+.black {
+  color: black;
+  background-color: white;
 }

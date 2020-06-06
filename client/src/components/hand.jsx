@@ -11,7 +11,7 @@ function Hand(props) {
         onCardClick={props.onCardClick}
       />)
   })
-  return <ul>{cards}</ul>
+  return <div className='hand-container'>{cards}</div>
 }
 
 Hand.propTypes = {
