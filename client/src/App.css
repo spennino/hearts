@@ -1,6 +1,9 @@
 * {
   font-family: 'Comic Neue', cursive;  
+  font-weight: bold;
+  font-size: 24px;
   background-color: seagreen;
+  color: white;
 }
 
 .game-container {
@@ -21,8 +24,8 @@
 }
 
 .card-container {
-  width: 60px;
-  height: 84px;
+  width: 71px;
+  height: 100px;
   border: 1px solid gray;
   border-radius: 5px;
   background-color: white;

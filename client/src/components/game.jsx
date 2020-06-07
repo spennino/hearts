@@ -15,7 +15,7 @@ class Game extends React.Component {
   constructor(props) {
     super(props)
     this.numOfPlayers = props.numOfPlayers || 4
-    this.state = {
+    let state = {
       ws: new WebSocket(WS_URL),
       gameCode: props.gameCode,
       startGame: props.startGame,
@@ -27,8 +27,9 @@ class Game extends React.Component {
     }
 
     if (props.startGame) {
-      this.startGame()
+      this.state = this.getGameStartState(state)
     } else {
+      this.state = state
       this.fetchGameState()
     }
 
@@ -51,23 +52,25 @@ class Game extends React.Component {
     }
   }
 
-  startGame() {
+  getGameStartState(state) {
     const deck = new Deck()
     for (var i = 1; i <= this.numOfPlayers; i++) {
-      this.state.players.push(new Player(i))
+      state.players.push(new Player(i))
     }
     deck.shuffle()
     while (deck.cards.length) {
-      this.state.players.forEach(player => {
-        const card = deck.cards.pop()
-        player.deal(card)
-        if (card.suit === 'Clubs' && card.value === 2) {
-          this.state.playerTurn = player.position
-          this.state.status = "Player " + player.position + "'s turn"
+      state.players.forEach(player => { player.deal(deck.cards.pop()) })
+    }
+    state.players.forEach(player => {
+      player.hand.forEach(card => {
+        if (card.suit === '♣' && card.value === 2) {
+          state.playerTurn = player.position
+          state.status = "Player " + player.position + "'s turn"
         }
       })
-    }
-    this.state.players.forEach(player => player.sortHand())
+    })
+    state.players.forEach(player => player.sortHand())
+    return state
   }
 
   fetchGameState() {
@@ -233,9 +236,9 @@ class Game extends React.Component {
   countPoints(cards) {
     let points = 0
     cards.forEach(card => {
-      if (card.suit === 'Hearts') {
+      if (card.suit === '♥') {
         points++
-      } else if (card.name === 'Queen of Spades') {
+      } else if (card.name === 'Q of ♠') {
         points += 13
       }
     })
