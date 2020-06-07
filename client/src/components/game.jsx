@@ -15,7 +15,7 @@ class Game extends React.Component {
   constructor(props) {
     super(props)
     this.numOfPlayers = props.numOfPlayers || 4
-    let state = {
+    this.state = {
       ws: new WebSocket(WS_URL),
       gameCode: props.gameCode,
       startGame: props.startGame,
@@ -27,9 +27,8 @@ class Game extends React.Component {
     }
 
     if (props.startGame) {
-      this.state = this.getGameStartState(state)
+      this.setGameStartState(this.state)
     } else {
-      this.state = state
       this.fetchGameState()
     }
 
@@ -52,7 +51,7 @@ class Game extends React.Component {
     }
   }
 
-  getGameStartState(state) {
+  setGameStartState(state) {
     const deck = new Deck()
     for (var i = 1; i <= this.numOfPlayers; i++) {
       state.players.push(new Player(i))
@@ -70,7 +69,6 @@ class Game extends React.Component {
       })
     })
     state.players.forEach(player => player.sortHand())
-    return state
   }
 
   fetchGameState() {
