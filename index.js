@@ -21,9 +21,9 @@ app.use(express.static(path.join(__dirname, 'client/build')))
 
 // Put all API endpoints under '/api'
 app.get('/api/game/create', (req, res) => {
-  let gameCode = shortid.generate()
+  let gameCode = shortid.generate().replace(/-/g, '').substring(0, 4).toUpperCase()
   if (process.env.NODE_ENV === 'development') {
-    res.json('sr8kOcHM9')
+    res.json('I9YQ')
   } else {
     redisSet(gameCode, '').then(status => {
       res.json(gameCode)
