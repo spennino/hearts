@@ -250,18 +250,8 @@ class Game extends React.Component {
           key={player.position}
           position={player.position}
           hand={player.hand}
+          tricksWon={player.tricksWon.length / 4}
           onCardClick={this.handleDiscard} />
-      )
-    })
-
-    const tricksWon = this.state.players.map(player => {
-      return (
-        <PlayerView
-          key={player.position + 'tricksWon'}
-          position={player.position}
-          hand={player.tricksWon}
-          onCardClick={() => { }}
-        />
       )
     })
 
@@ -278,27 +268,25 @@ class Game extends React.Component {
     let trickCards = Object.values(this.state.trick);
 
     return (
-      <div className='game-container'>
-        <div className='game-code'>
-          Game code: {this.state.gameCode}
+      <div>
+        <div className='row-container'>
+          <div className='game-code'>
+            <h2>Game code: {this.state.gameCode}</h2>
+            {this.state.status}
+          </div>
+          <div className='score'>
+            Score:
+            {scores}
+          </div>
         </div>
-        <div className='game-status'>
-          Status: {this.state.status}
-        </div>
-        <div className='players'>
-          {playerViews}
-        </div>
-        <div className='trick'>
-          Trick:
+        <div className='row-container'>
+          <div className='players'>
+            {playerViews}
+          </div>
+          <div className='trick'>
+            Trick:
           <Hand cards={trickCards} />
-        </div>
-        <div className='discards'>
-          Tricks Won:
-          {tricksWon}
-        </div>
-        <div className='score'>
-          Score:
-          {scores}
+          </div>
         </div>
       </div>
     )

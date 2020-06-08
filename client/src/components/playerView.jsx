@@ -5,7 +5,8 @@ import Hand from './hand.jsx'
 function PlayerView(props) {
   return (
     <div>
-      Player {props.position}
+      <h2>Player {props.position}</h2>
+      Tricks Won: {props.tricksWon}
       <Hand
         cards={props.hand}
         onCardClick={(card) => props.onCardClick(card, props.position)}
@@ -17,6 +18,7 @@ function PlayerView(props) {
 PlayerView.propTypes = {
   position: PropTypes.number,
   hand: PropTypes.array,
+  tricksWon: PropTypes.number,
   onCardClick: PropTypes.func
 }
 
