@@ -280,7 +280,7 @@ class Game extends React.Component {
           </div>
         </div>
         <div className='row-container'>
-          <div className='players'>
+          <div className='players row-container'>
             {playerViews}
           </div>
           <div className='trick'>

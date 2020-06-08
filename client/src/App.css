@@ -10,9 +10,14 @@
   display: flex;
 }
 
-.players, .trick, .game-code, .score {
+.trick, .score {
   flex-grow: 1;
-  flex-basis: 0;
+  flex-basis: 25%;
+}
+
+.players, .game-code {
+  flex-grow: 1;
+  flex-basis: 75%;
 }
 
 .hidden {
