@@ -1,5 +1,5 @@
 * {
-  font-family: 'Comic Neue', cursive;  
+  font-family: 'Nunito', sans-serif;
   font-weight: bold;
   font-size: 24px;
   background-color: seagreen;
@@ -30,10 +30,10 @@
 }
 
 .card-container {
-  width: 71px;
-  height: 100px;
+  width: 78px;
+  height: 110px;
   border: 1px solid gray;
-  border-radius: 5px;
+  border-radius: 6px;
   background-color: white;
   margin: 5px;
   padding: 0px 5px 0px 5px;
