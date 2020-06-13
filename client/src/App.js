@@ -68,11 +68,11 @@ class App extends React.Component {
           >Create Game</button>
           <form onSubmit={this.handleSubmit}>
             <label>
-              Game Code:
               <input
                 type="text"
                 value={this.state.inputGameCode}
                 onChange={this.handleChange}
+                placeholder="Game Code"
                 name="code" />
             </label>
             <input type="submit" value="Join" />

@@ -33,6 +33,7 @@ class Game extends React.Component {
     }
 
     this.handleDiscard = this.handleDiscard.bind(this)
+    this.dealNextHand = this.dealNextHand.bind(this)
   }
 
   componentDidMount() {
@@ -120,6 +121,31 @@ class Game extends React.Component {
 
   sendGameUpdate() {
     this.state.ws.send(JSON.stringify(this.state))
+  }
+
+  dealNextHand() {
+    const players = this.state.players.slice()
+    const deck = new Deck()
+
+    deck.shuffle()
+    while (deck.cards.length > 0) {
+      players.forEach(player => player.deal(deck.cards.pop()))
+    }
+
+    players.forEach(player => player.sortHand())
+
+    let playerTurn, status
+    players.forEach(player => {
+      player.hand.forEach(card => {
+        if (card.suit === '♣' && card.value === 2) {
+          playerTurn = player.position
+          status = "Player " + player.position + "'s turn"
+        }
+      })
+    })
+    this.setState({ players, playerTurn, status }, () => {
+      this.sendGameUpdate()
+    })
   }
 
   handleDiscard(card, playerPosition) {
@@ -267,12 +293,21 @@ class Game extends React.Component {
 
     let trickCards = Object.values(this.state.trick);
 
+    let dealButtonClass = this.state.status !== 'End of hand!' ? 'hidden' : '';
+
     return (
       <div>
         <div className='row-container'>
           <div className='game-code'>
             <h2>Game code: {this.state.gameCode}</h2>
             {this.state.status}
+            <div>
+              <button
+                type='button'
+                className={dealButtonClass}
+                onClick={this.dealNextHand}
+              >Deal</button>
+            </div>
           </div>
           <div className='score'>
             Score:
