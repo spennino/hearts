@@ -10,17 +10,41 @@ body {
   margin: 10px;
 }
 
+h1 {
+  font-size: 48px;
+  text-align: center;
+}
+
 h2 {
   font-size: 24px;
 }
 
 button, input {
   background-color: #4C6085;
+  height: 40px;
+  width: 80%;
+  margin: 5px auto;
+  padding: 0px;
 }
 
 .row-container {
   display: flex;
   justify-content: center;
+}
+
+.home-page-input {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 300px;
+  margin: 0 auto;
+}
+
+.home-page {
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
 }
 
 .trick {

@@ -8,12 +8,39 @@ class App extends React.Component {
     this.state = {
       gameCode: null,
       inputGameCode: '',
+      playerName: '',
+      submitButtonLabel: 'Create Game',
       startGame: false,
       isFetching: false
     }
     this.createGame = this.createGame.bind(this)
-    this.handleChange = this.handleChange.bind(this)
+    this.handleGameCodeChange = this.handleGameCodeChange.bind(this)
+    this.handleNameChange = this.handleNameChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+  }
+
+  handleGameCodeChange(event) {
+    let inputGameCode = event.target.value
+    let submitButtonLabel
+    if (!inputGameCode || inputGameCode === '') {
+      submitButtonLabel = 'Create Game'
+    } else {
+      submitButtonLabel = 'Join Game'
+    }
+    this.setState({ inputGameCode, submitButtonLabel })
+  }
+
+  handleNameChange(event) {
+    this.setState({ playerName: event.target.value })
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    if (!this.state.inputGameCode || this.state.inputGameCode === '') {
+      this.createGame()
+    } else {
+      this.fetchGame()
+    }
   }
 
   createGame() {
@@ -30,12 +57,7 @@ class App extends React.Component {
       .catch(console.log)
   }
 
-  handleChange(event) {
-    this.setState({ inputGameCode: event.target.value });
-  }
-
-  handleSubmit(event) {
-    event.preventDefault();
+  fetchGame() {
     this.setState({ isFetching: true })
     fetch(`/api/game/get/${this.state.inputGameCode}`)
       .then(response => {
@@ -60,24 +82,28 @@ class App extends React.Component {
     if (this.state.gameCode === null) {
       let buttonClass = this.state.isFetching ? 'hidden' : '';
       return (
-        <div>
-          <button
-            type='button'
-            className={buttonClass}
-            onClick={this.createGame}
-          >Create Game</button>
-          <form onSubmit={this.handleSubmit}>
-            <label>
-              <input
-                type="text"
-                value={this.state.inputGameCode}
-                onChange={this.handleChange}
-                placeholder="Game Code"
-                name="code" />
-            </label>
-            <input type="submit" value="Join" />
-          </form>
-        </div>
+        <div className='home-page'>
+          <h1><span className='red'>♥</span> Hearts.Chat <span className='red'>♥</span></h1>
+          <div className='home-page-input'>
+            <input
+              type="text"
+              value={this.state.playerName}
+              onChange={this.handleNameChange}
+              placeholder="Your Name (required)"
+              name="code" />
+            <input
+              type="text"
+              value={this.state.inputGameCode}
+              onChange={this.handleGameCodeChange}
+              placeholder="Game Code (optional)"
+              name="code" />
+            <button
+              type='button'
+              className={buttonClass}
+              onClick={this.handleSubmit}
+            >{this.state.submitButtonLabel}</button>
+          </div>
+        </div >
       );
     } else {
       return (
