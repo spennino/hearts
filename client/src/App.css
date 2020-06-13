@@ -1,23 +1,44 @@
 * {
   font-family: 'Nunito', sans-serif;
   font-weight: bold;
-  font-size: 24px;
-  background-color: seagreen;
+  font-size: 20px;
   color: white;
+}
+
+body {
+  background-color: seagreen;
+  margin: 10px;
+}
+
+h2 {
+  font-size: 24px;
 }
 
 .row-container {
   display: flex;
+  justify-content: center;
 }
 
-.trick, .score {
+.trick {
+  height: 150px;
+  width: 335px;
+}
+
+.score {
   flex-grow: 1;
   flex-basis: 25%;
+  background-color: #4C6085;
+  padding: 15px;
 }
 
-.players, .game-code {
+.game-code {
   flex-grow: 1;
   flex-basis: 75%;
+}
+
+.player {
+  flex-grow: 1;
+  flex-basis: 0;
 }
 
 .hidden {
@@ -30,8 +51,8 @@
 }
 
 .card-container {
-  width: 78px;
-  height: 110px;
+  width: 60px;
+  height: 84px;
   border: 1px solid gray;
   border-radius: 6px;
   background-color: white;
@@ -56,10 +77,8 @@
 
 .red {
   color: red;
-  background-color: white;
 }
 
 .black {
   color: black;
-  background-color: white;
 }

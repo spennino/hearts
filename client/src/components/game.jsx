@@ -280,13 +280,13 @@ class Game extends React.Component {
           </div>
         </div>
         <div className='row-container'>
-          <div className='players row-container'>
-            {playerViews}
-          </div>
           <div className='trick'>
-            Trick:
-          <Hand cards={trickCards} />
+            <h2 className='center-align'>Trick:</h2>
+            <Hand cards={trickCards} />
           </div>
+        </div>
+        <div className='row-container'>
+          {playerViews}
         </div>
       </div>
     )
