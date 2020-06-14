@@ -332,9 +332,7 @@ class Game extends React.Component {
             <Hand cards={trickCards} />
           </div>
         </div>
-        <div className='row-container'>
-          {playerViews}
-        </div>
+        {playerViews}
       </div>
     )
   }
