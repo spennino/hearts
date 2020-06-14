@@ -298,9 +298,14 @@ class Game extends React.Component {
     return (
       <div>
         <div className='row-container'>
+          <div className='status'>
+            <div className='status-description'>
+              {this.state.status}
+            </div>
+          </div>
           <div className='game-code'>
+            <h1><span className='red'>♥</span> Hearts.Chat <span className='red'>♥</span></h1>
             <h2>Game code: {this.state.gameCode}</h2>
-            {this.state.status}
             <div>
               <button
                 type='button'
@@ -316,7 +321,7 @@ class Game extends React.Component {
         </div>
         <div className='row-container'>
           <div className='trick'>
-            <h2 className='center-align'>Trick:</h2>
+            <h2>Trick:</h2>
             <Hand cards={trickCards} />
           </div>
         </div>

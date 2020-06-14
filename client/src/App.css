@@ -1,3 +1,12 @@
+:root {
+  --green: seagreen;
+  --blue: #4C6085;
+  --pink: #E56B70;
+  --yellow: #E2D686;
+  --gray: #333333;
+  --brown: #2C0703;
+}
+
 * {
   font-family: 'Nunito', sans-serif;
   font-weight: bold;
@@ -6,7 +15,7 @@
 }
 
 body {
-  background-color: seagreen;
+  background-color: var(--green);
   margin: 10px;
 }
 
@@ -17,10 +26,11 @@ h1 {
 
 h2 {
   font-size: 24px;
+  text-align: center;
 }
 
 button, input {
-  background-color: #4C6085;
+  background-color: var(--blue);
   height: 40px;
   width: 80%;
   margin: 5px auto;
@@ -48,20 +58,45 @@ button, input {
 }
 
 .trick {
-  height: 150px;
-  width: 335px;
+  height: 175px;
+  width: 328px;
+  border-style: dashed;
+  border-radius: 6px;;
+  border-color: black;
+  background-color: var(--green);
+}
+
+.status {
+  flex-grow: 1;
+  flex-basis: 25%;
+  background-color: var(--yellow);
+  color: var(--gray);
+  border-style: outset;
+  border-radius: 6px;
+  border-color: var(--yellow);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+}
+
+.status-description {
+  color: var(--brown);
 }
 
 .score {
   flex-grow: 1;
   flex-basis: 25%;
-  background-color: #4C6085;
+  background-color: var(--blue);
   padding: 15px;
+  border-style: outset;
+  border-radius: 6px;
+  border-color: var(--blue);
 }
 
 .game-code {
   flex-grow: 1;
-  flex-basis: 75%;
+  flex-basis: 50%;
 }
 
 .player {

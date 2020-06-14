@@ -5,7 +5,7 @@ import Hand from './hand.jsx'
 function PlayerView(props) {
   return (
     <div className='player'>
-      <h2>Player {props.position}</h2>
+      <h3>Player {props.position}</h3>
       Tricks Won: {props.tricksWon}
       <Hand
         cards={props.hand}
