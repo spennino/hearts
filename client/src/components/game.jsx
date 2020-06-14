@@ -287,6 +287,7 @@ class Game extends React.Component {
           key={player.position}
           position={player.position}
           points={player.points}
+          tricksWon={player.tricksWon.length / 4}
         />
       )
     })
@@ -315,8 +316,14 @@ class Game extends React.Component {
             </div>
           </div>
           <div className='score'>
-            Score:
-            {scores}
+            <table>
+              <tr>
+                <th>Player</th>
+                <th class='right-align'>Tricks</th>
+                <th class='right-align'>Score</th>
+              </tr>
+              {scores}
+            </table>
           </div>
         </div>
         <div className='row-container'>

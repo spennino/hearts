@@ -92,6 +92,14 @@ button, input {
   border-style: outset;
   border-radius: 6px;
   border-color: var(--blue);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.score > table {
+  width: 100%;
+  text-align: left;
 }
 
 .game-code {
