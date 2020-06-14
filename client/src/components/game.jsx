@@ -299,20 +299,28 @@ class Game extends React.Component {
     return (
       <div>
         <div className='row-container'>
-          <div className='status'>
-            <div className='status-description'>
-              {this.state.status}
-            </div>
-          </div>
           <div className='game-code'>
             <h1><span className='red'>♥</span> Hearts.Chat <span className='red'>♥</span></h1>
             <h2>Game code: {this.state.gameCode}</h2>
-            <div>
-              <button
-                type='button'
-                className={dealButtonClass}
-                onClick={this.dealNextHand}
-              >Deal</button>
+          </div>
+        </div>
+        <div className='row-container'>
+          <div className='status'>
+            <div className='status-description'>
+              {this.state.status}
+              <div>
+                <button
+                  type='button'
+                  className={dealButtonClass}
+                  onClick={this.dealNextHand}
+                >Deal</button>
+              </div>
+            </div>
+          </div>
+          <div className='trick-container'>
+            <div className='trick'>
+              <h2>Trick:</h2>
+              <Hand cards={trickCards} />
             </div>
           </div>
           <div className='score'>
@@ -327,10 +335,7 @@ class Game extends React.Component {
           </div>
         </div>
         <div className='row-container'>
-          <div className='trick'>
-            <h2>Trick:</h2>
-            <Hand cards={trickCards} />
-          </div>
+
         </div>
         {playerViews}
       </div>

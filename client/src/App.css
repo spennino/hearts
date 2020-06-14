@@ -64,6 +64,13 @@ button, input {
   justify-content: left;
 }
 
+.trick-container {
+  flex-grow: 1;
+  flex-basis: 50%;
+  display: flex;
+  justify-content: center;
+}
+
 .trick {
   height: 175px;
   width: 328px;
