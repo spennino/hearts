@@ -32,9 +32,6 @@ h2 {
 button, input {
   background-color: var(--blue);
   height: 40px;
-  width: 80%;
-  margin: 5px auto;
-  padding: 0px;
 }
 
 .row-container {
@@ -48,6 +45,12 @@ button, input {
   justify-content: center;
   width: 300px;
   margin: 0 auto;
+}
+
+.home-page-input > button, input {
+  width: 80%;
+  margin: 5px auto;
+  padding: 0px;
 }
 
 .home-page {
