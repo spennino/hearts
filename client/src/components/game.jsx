@@ -327,7 +327,7 @@ class Game extends React.Component {
             <table>
               <tr>
                 <th>Player</th>
-                <th class='right-align'>Tricks</th>
+                <th class='right-align'>Tricks Won</th>
                 <th class='right-align'>Score</th>
               </tr>
               {scores}

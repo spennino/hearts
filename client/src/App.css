@@ -16,7 +16,7 @@
 
 body {
   background-color: var(--green);
-  margin: 10px;
+  margin: 30px;
 }
 
 h1 {
@@ -135,6 +135,7 @@ button, input {
   width: 60px;
   height: 84px;
   border: 1px solid gray;
+  border-style: outset;
   border-radius: 6px;
   background-color: white;
   margin: 5px;
