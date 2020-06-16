@@ -1,5 +1,7 @@
 :root {
   --green: #2e8b57;
+  --green-blue: #2e8b65;
+  --green-yellow: #2e8b50;
   --blue: #4C6085;
   --pink: #E56B70;
   --yellow: #E2D686;
@@ -15,8 +17,13 @@
   color: white;
 }
 
+html {
+  min-height: 100%;
+  min-width: 100%;
+}
 body {
   background-color: var(--green);
+  background-image: linear-gradient(to top, var(--green-blue), var(--green-yellow));
   margin: 30px;
 }
 
