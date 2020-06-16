@@ -300,7 +300,7 @@ class Game extends React.Component {
       <div>
         <div className='row-container'>
           <div className='game-code'>
-            <h1><span className='red'>♥</span> Hearts.Chat <span className='red'>♥</span></h1>
+            <h1>Hearts<span className='red'>♥</span>Chat</h1>
             <h2>Game code: {this.state.gameCode}</h2>
           </div>
         </div>

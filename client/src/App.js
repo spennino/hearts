@@ -80,28 +80,40 @@ class App extends React.Component {
 
   render() {
     if (this.state.gameCode === null) {
-      let buttonClass = this.state.isFetching ? 'hidden' : '';
+      let buttonClass = this.state.isFetching ? 'btn hidden' : 'btn';
+      let createEnabled = !this.state.inputGameCode || this.state.inputGameCode === ''
       return (
         <div className='home-page'>
-          <h1><span className='red'>♥</span> Hearts.Chat <span className='red'>♥</span></h1>
+          <h1>Hearts<span className='red'>♥</span>Chat</h1>
           <div className='home-page-input'>
             <input
+              className='input'
               type="text"
               value={this.state.playerName}
               onChange={this.handleNameChange}
               placeholder="Your Name (required)"
               name="code" />
             <input
+              className='input'
               type="text"
               value={this.state.inputGameCode}
               onChange={this.handleGameCodeChange}
-              placeholder="Game Code (optional)"
+              placeholder="Game Code (if joining)"
               name="code" />
-            <button
-              type='button'
-              className={buttonClass}
-              onClick={this.handleSubmit}
-            >{this.state.submitButtonLabel}</button>
+            <div className='row-container create-join-buttons'>
+              <button
+                type='button'
+                className={buttonClass}
+                onClick={this.handleSubmit}
+                disabled={!createEnabled}
+              >Create Game</button>
+              <button
+                type='button'
+                className={buttonClass}
+                onClick={this.handleSubmit}
+                disabled={createEnabled}
+              >Join Game</button>
+            </div>
           </div>
         </div >
       );

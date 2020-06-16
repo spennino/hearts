@@ -1,9 +1,10 @@
 :root {
-  --green: seagreen;
+  --green: #2e8b57;
   --blue: #4C6085;
   --pink: #E56B70;
   --yellow: #E2D686;
   --gray: #333333;
+  --light-gray: #aaaaaa;
   --brown: #2C0703;
 }
 
@@ -51,10 +52,30 @@ button, input {
   margin: 0 auto;
 }
 
-.home-page-input > button, input {
+.input {
+  padding: 5px;
+  border: none;
+  margin-bottom: 5px;
+  border-style: outset;
+  border-radius: 6px;
+  border-color: var(--blue);
+}
+
+.input::placeholder {
+  color: var(--light-gray);
+}
+
+.btn {
   width: 80%;
-  margin: 5px auto;
-  padding: 0px;
+  padding: 5px;
+  border-style: outset;
+  border-radius: 6px;
+  border-color: var(--blue);
+}
+
+.btn:disabled {
+  opacity: 0.7;
+  color: white
 }
 
 .home-page {
