@@ -9,7 +9,7 @@ class App extends React.Component {
       gameCode: null,
       inputGameCode: '',
       playerName: '',
-      submitButtonLabel: 'Create Game',
+      submitButtonLabel: 'Create or Join Game',
       startGame: false,
       isFetching: false
     }
