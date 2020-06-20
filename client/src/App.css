@@ -100,8 +100,8 @@ button, input {
 }
 
 .trick {
-  height: 175px;
-  width: 328px;
+  height: 200px;
+  width: 408px;
   border-style: dashed;
   border-radius: 6px;;
   border-color: black;
@@ -160,8 +160,8 @@ button, input {
 }
 
 .card-container {
-  width: 60px;
-  height: 84px;
+  width: 80px;
+  height: 112px;
   border: 1px solid gray;
   border-style: outset;
   border-radius: 6px;
