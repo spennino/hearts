@@ -83,7 +83,8 @@ class App extends React.Component {
   render() {
     if (this.state.gameCode === null) {
       let buttonClass = this.state.isFetching ? 'btn hidden' : 'btn';
-      let createEnabled = !this.state.inputGameCode || this.state.inputGameCode === ''
+      let createEnabled = this.state.playerName && !this.state.inputGameCode
+      let joinEnabled = this.state.playerName && this.state.inputGameCode
       return (
         <div className='home-page'>
           <h1>Hearts<span className='red'>♥</span>Chat</h1>
@@ -113,7 +114,7 @@ class App extends React.Component {
                 type='button'
                 className={buttonClass}
                 onClick={this.handleSubmit}
-                disabled={createEnabled}
+                disabled={!joinEnabled}
               >Join Game</button>
             </div>
           </div>
