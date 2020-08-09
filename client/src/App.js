@@ -10,8 +10,8 @@ class App extends React.Component {
       inputGameCode: '',
       playerName: '',
       submitButtonLabel: 'Create or Join Game',
-      startGame: false,
-      isFetching: false
+      isFetching: false,
+      gameStateResponse: null,
     }
     this.createGame = this.createGame.bind(this)
     this.handleGameCodeChange = this.handleGameCodeChange.bind(this)
@@ -50,7 +50,6 @@ class App extends React.Component {
       .then(gameCode => {
         this.setState({
           gameCode: gameCode,
-          startGame: true,
           isFetching: false
         })
       })
@@ -63,9 +62,11 @@ class App extends React.Component {
       .then(response => {
         switch (response.status) {
           case 200:
-            this.setState({
-              gameCode: this.state.inputGameCode,
-              startGame: false
+            response.json().then(json => {
+              this.setState({
+                gameCode: this.state.inputGameCode,
+                gameStateResponse: json
+              })
             })
             break
           case 404:
@@ -74,6 +75,7 @@ class App extends React.Component {
           default:
             alert('There was an error, please try again')
         }
+        this.setState({ isFetching: false })
       })
       .catch(console.log)
   }
@@ -121,7 +123,8 @@ class App extends React.Component {
       return (
         <Game
           gameCode={this.state.gameCode}
-          startGame={this.state.startGame}
+          playerName={this.state.playerName}
+          gameStateResponse={this.state.gameStateResponse}
         />
       )
     }

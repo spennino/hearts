@@ -2,8 +2,9 @@ const suits = require('./cardTypes.js').suits
 const values = require('./cardTypes.js').values
 
 class Player {
-  constructor(position) {
+  constructor(position, name) {
     this.position = position
+    this.name = name
     this.hand = []
     this.tricksWon = []
     this.points = 0

@@ -15,21 +15,25 @@ class Game extends React.Component {
   constructor(props) {
     super(props)
     this.numOfPlayers = props.numOfPlayers || 4
+
+    let parsedGamedState
+    if (props.gameStateResponse) {
+      // current issue: can't call set state until component is mounted
+      // need the gameCode set bc of the check before the parsing
+      this.state = { gameCode: props.gameCode }
+      parsedGamedState = this.parseGameStateResponse(props.gameStateResponse)
+    }
+
     this.state = {
       ws: new WebSocket(WS_URL),
       gameCode: props.gameCode,
-      startGame: props.startGame,
-      players: [],
-      trick: {},
-      trickSuit: '',
-      playerTurn: 1,
-      status: ''
-    }
-
-    if (props.startGame) {
-      this.setGameStartState(this.state)
-    } else {
-      this.fetchGameState()
+      playerName: props.playerName,
+      playerAdded: false,
+      players: parsedGamedState ? parsedGamedState.players : [],
+      trick: parsedGamedState ? parsedGamedState.trick : {},
+      trickSuit: parsedGamedState ? parsedGamedState.trickSuit : '',
+      playerTurn: parsedGamedState ? parsedGamedState.playerTurn : 1,
+      status: parsedGamedState ? parsedGamedState.status : ''
     }
 
     this.handleDiscard = this.handleDiscard.bind(this)
@@ -38,8 +42,8 @@ class Game extends React.Component {
 
   componentDidMount() {
     this.state.ws.onopen = () => {
-      if (this.state.startGame) {
-        this.sendGameUpdate()
+      if (!this.state.playerAdded) {
+        this.addPlayer(this.state.playerName)
       }
     }
     this.state.ws.onmessage = evt => {
@@ -52,24 +56,37 @@ class Game extends React.Component {
     }
   }
 
-  setGameStartState(state) {
-    const deck = new Deck()
-    for (var i = 1; i <= this.numOfPlayers; i++) {
-      state.players.push(new Player(i))
+  addPlayer(playerName) {
+    const players = this.state.players.slice()
+    players.push(new Player(players.length + 1, playerName))
+    this.setState({ players: players, playerAdded: true })
+    if (players.length === this.numOfPlayers) {
+      this.startGame()
+    } else {
+      let remaining = this.numOfPlayers - players.length
+      this.setState({ status: "Waiting on " + remaining + " more player(s)" })
     }
+    this.sendGameUpdate()
+  }
+
+  startGame() {
+    const players = this.state.players.slice()
+    const deck = new Deck()
     deck.shuffle()
     while (deck.cards.length) {
-      state.players.forEach(player => { player.deal(deck.cards.pop()) })
+      players.forEach(player => { player.deal(deck.cards.pop()) })
     }
-    state.players.forEach(player => {
+    players.forEach(player => {
       player.hand.forEach(card => {
         if (card.suit === '♣' && card.value === 2) {
-          state.playerTurn = player.position
-          state.status = "Player " + player.position + "'s turn"
+          this.setState({
+            playerTurn: player.position,
+            status: "Player " + player.position + "'s turn"
+          })
         }
       })
     })
-    state.players.forEach(player => player.sortHand())
+    players.forEach(player => player.sortHand())
   }
 
   fetchGameState() {
@@ -275,6 +292,7 @@ class Game extends React.Component {
         <PlayerView
           key={player.position}
           position={player.position}
+          name={player.name}
           hand={player.hand}
           tricksWon={player.tricksWon.length / 4}
           onCardClick={this.handleDiscard} />
@@ -286,6 +304,7 @@ class Game extends React.Component {
         <Score
           key={player.position}
           position={player.position}
+          name={player.name}
           points={player.points}
           tricksWon={player.tricksWon.length / 4}
         />
@@ -325,12 +344,14 @@ class Game extends React.Component {
           </div>
           <div className='score'>
             <table>
-              <tr>
-                <th>Player</th>
-                <th class='right-align'>Tricks Won</th>
-                <th class='right-align'>Score</th>
-              </tr>
-              {scores}
+              <tbody>
+                <tr>
+                  <th>Player</th>
+                  <th className='right-align'>Tricks Won</th>
+                  <th className='right-align'>Score</th>
+                </tr>
+                {scores}
+              </tbody>
             </table>
           </div>
         </div>
