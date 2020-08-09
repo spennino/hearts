@@ -106,7 +106,7 @@ class Game extends React.Component {
     }
     let newPlayers = response.players || []
     newPlayers = newPlayers.map(player => {
-      let newPlayer = new Player(player.position)
+      let newPlayer = new Player(player.position, player.name)
       newPlayer.hand = this.parseCards(player.hand)
       newPlayer.tricksWon = this.parseCards(player.tricksWon)
       newPlayer.points = player.points
